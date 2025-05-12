@@ -1,0 +1,2 @@
+C:/Users/santi/OneDrive/Desktop/Desen.Mobile_LucasSantino/Projeto integrador/app_agrotrack/android/app/.cxx/Debug/i274g692/x86_64/CMakeFiles/edit_cache.dir
+C:/Users/santi/OneDrive/Desktop/Desen.Mobile_LucasSantino/Projeto integrador/app_agrotrack/android/app/.cxx/Debug/i274g692/x86_64/CMakeFiles/rebuild_cache.dir
