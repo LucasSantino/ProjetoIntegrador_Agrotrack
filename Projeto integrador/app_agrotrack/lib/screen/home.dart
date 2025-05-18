@@ -60,21 +60,35 @@ class Home extends StatelessWidget {
               // Card agrupado dos sensores
               _buildGroupedCard([
                 _buildItem(
-                    icon: Icons.thermostat,
-                    title: 'Temperatura',
-                    value: '28°C'),
+                  icon: Icons.thermostat,
+                  title: 'Temperatura',
+                  value: '28°C',
+                  color: Colors.red,
+                ),
                 _buildItem(
-                    icon: Icons.water_drop,
-                    title: 'Umidade do Solo',
-                    value: '42%'),
+                  icon: Icons.water_drop,
+                  title: 'Umidade do Solo',
+                  value: '42%',
+                  color: Colors.blue,
+                ),
                 _buildItem(
-                    icon: Icons.wb_sunny,
-                    title: 'Luminosidade',
-                    value: '700 lux'),
+                  icon: Icons.wb_sunny,
+                  title: 'Luminosidade',
+                  value: '700 lux',
+                  color: Colors.amber,
+                ),
                 _buildItem(
-                    icon: Icons.science, title: 'pH da água', value: '6.5'),
+                  icon: Icons.science,
+                  title: 'pH da água',
+                  value: '6.5',
+                  color: Colors.purple,
+                ),
                 _buildItem(
-                    icon: Icons.cloud, title: 'Qualidade do Ar', value: '55%'),
+                  icon: Icons.cloud,
+                  title: 'Qualidade do Ar',
+                  value: '55%',
+                  color: Colors.green,
+                ),
               ]),
 
               const SizedBox(height: 24),
