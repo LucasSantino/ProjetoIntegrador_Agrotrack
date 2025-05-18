@@ -35,7 +35,7 @@ class _SensoresState extends State<Sensores> {
           children: [
             const SizedBox(height: 40),
             const Text(
-              'Monitoramento: Sensores',
+              'Monitoramento dos Sensores',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 24),
