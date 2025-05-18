@@ -1,2 +1,0 @@
-C:/Users/santi/OneDrive/Desktop/Desen.Mobile_LucasSantino/Aula11/appaula11/android/app/.cxx/Debug/361c2r31/armeabi-v7a/CMakeFiles/edit_cache.dir
-C:/Users/santi/OneDrive/Desktop/Desen.Mobile_LucasSantino/Aula11/appaula11/android/app/.cxx/Debug/361c2r31/armeabi-v7a/CMakeFiles/rebuild_cache.dir
