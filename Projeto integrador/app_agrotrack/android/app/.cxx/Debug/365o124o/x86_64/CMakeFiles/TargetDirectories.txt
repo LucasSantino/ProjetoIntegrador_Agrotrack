@@ -1,0 +1,2 @@
+C:/Users/santi/OneDrive/Desktop/ProjetoIntegrador_Agrotrack/Projeto integrador/app_agrotrack/android/app/.cxx/Debug/365o124o/x86_64/CMakeFiles/edit_cache.dir
+C:/Users/santi/OneDrive/Desktop/ProjetoIntegrador_Agrotrack/Projeto integrador/app_agrotrack/android/app/.cxx/Debug/365o124o/x86_64/CMakeFiles/rebuild_cache.dir
