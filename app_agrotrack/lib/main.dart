@@ -78,7 +78,7 @@ class _NavScreenState extends State<NavScreen> {
         backgroundColor: primaryColor,
         type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Inicio'),
           BottomNavigationBarItem(
             icon: Icon(Icons.thermostat),
             label: 'Sensores',
@@ -86,11 +86,11 @@ class _NavScreenState extends State<NavScreen> {
           BottomNavigationBarItem(icon: Icon(Icons.water), label: 'Automação'),
           BottomNavigationBarItem(
             icon: Icon(Icons.agriculture),
-            label: 'Cultivo',
+            label: 'Pantações',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.smart_toy),
-            label: 'Chatbot',
+            label: 'Agrochat',
           ),
         ],
         onTap: onItemTapped,
