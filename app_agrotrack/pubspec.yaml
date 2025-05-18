@@ -31,7 +31,8 @@ dependencies:
   flutter:
     sdk: flutter
   image_picker: ^1.0.7 #permite a seleção de imagens
-  fl_chart: ^0.65.0
+  fl_chart: ^0.65.0  #biblioteca para criar graficos
+  flutter_svg: ^2.0.7 #biblioteca para alterar a cor de imagens ou elementos
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
