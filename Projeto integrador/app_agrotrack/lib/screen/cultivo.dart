@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'cadastrocultivo.dart'; // importe a nova tela
 
 class Cultivo extends StatelessWidget {
   final List<Map<String, dynamic>> culturasCadastradas = [
@@ -79,8 +80,26 @@ class Cultivo extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 40),
-            Text('Plantações em Andamento',
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'Plantações em Andamento',
+                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                ),
+                IconButton(
+                  icon: const Icon(Icons.add_circle,
+                      color: Color.fromRGBO(0, 150, 136, 1), size: 30),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const CadastroCultivo()),
+                    );
+                  },
+                ),
+              ],
+            ),
             const SizedBox(height: 12),
             for (var cultura in culturasCadastradas)
               Card(
@@ -89,9 +108,16 @@ class Cultivo extends StatelessWidget {
                 elevation: 4,
                 margin: const EdgeInsets.symmetric(vertical: 8),
                 child: ListTile(
-                  leading: Icon(cultura['imagem'], color: Colors.green),
+                  // Ajuste do padding interno do ListTile para dar mais espaço geral
+                  contentPadding:
+                      const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                  // Adiciona padding extra ao ícone para aumentar distância das informações
+                  leading: Padding(
+                    padding: const EdgeInsets.only(right: 20),
+                    child: Icon(cultura['imagem'], color: Colors.green, size: 32),
+                  ),
                   title: Text(cultura['nome'],
-                      style: TextStyle(fontWeight: FontWeight.bold)),
+                      style: const TextStyle(fontWeight: FontWeight.bold)),
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -105,7 +131,7 @@ class Cultivo extends StatelessWidget {
                 ),
               ),
             const SizedBox(height: 24),
-            Text('Sugestões de Plantio',
+            const Text('Sugestões de Plantio',
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
             const SizedBox(height: 12),
             for (var sugestao in sugestoesPlantio)
@@ -115,9 +141,14 @@ class Cultivo extends StatelessWidget {
                 elevation: 4,
                 margin: const EdgeInsets.symmetric(vertical: 8),
                 child: ListTile(
-                  leading: Icon(Icons.spa, color: Colors.teal),
+                  contentPadding:
+                      const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                  leading: const Padding(
+                    padding: EdgeInsets.only(right: 20),
+                    child: Icon(Icons.spa, color: Colors.teal, size: 32),
+                  ),
                   title: Text(sugestao['cultura']!,
-                      style: TextStyle(fontWeight: FontWeight.bold)),
+                      style: const TextStyle(fontWeight: FontWeight.bold)),
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
