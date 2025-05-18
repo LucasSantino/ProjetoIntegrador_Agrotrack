@@ -21,7 +21,7 @@ class Home extends StatelessWidget {
               const SizedBox(height: 16),
 
               Text(
-                'Status do Sistema:',
+                'Status do Sistema',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
               ),
               const SizedBox(height: 16),
@@ -56,7 +56,7 @@ class Home extends StatelessWidget {
 
               const SizedBox(height: 24),
               Text(
-                'Sensores em tempo real:',
+                'Sensores em tempo real',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
               ),
               const SizedBox(height: 16),
@@ -97,7 +97,7 @@ class Home extends StatelessWidget {
 
               const SizedBox(height: 24),
               Text(
-                'Plantações em andamento:',
+                'Plantações em andamento',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
               ),
               const SizedBox(height: 16),
