@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fl_chart/fl_chart.dart';
 
 class Sensores extends StatefulWidget {
   const Sensores({super.key});
@@ -51,6 +52,16 @@ class _SensoresState extends State<Sensores> {
                 'Última calibração: 2 dias atrás',
                 'Estado: Bom',
               ],
+              dadosGrafico: [
+                FlSpot(0, 26),
+                FlSpot(1, 27),
+                FlSpot(2, 28),
+                FlSpot(3, 29),
+                FlSpot(4, 27),
+                FlSpot(5, 28),
+                FlSpot(6, temperatura),
+              ],
+              corGrafico: Colors.red,
             ),
             _buildSensorExpansionTile(
               icon: Icons.water_drop,
@@ -65,6 +76,16 @@ class _SensoresState extends State<Sensores> {
                 'Última calibração: 3 dias atrás',
                 'Estado: Bom',
               ],
+              dadosGrafico: [
+                FlSpot(0, 38),
+                FlSpot(1, 40),
+                FlSpot(2, 42),
+                FlSpot(3, 41),
+                FlSpot(4, 43),
+                FlSpot(5, 42),
+                FlSpot(6, umidade),
+              ],
+              corGrafico: Colors.blue,
             ),
             _buildSensorExpansionTile(
               icon: Icons.wb_sunny,
@@ -79,6 +100,16 @@ class _SensoresState extends State<Sensores> {
                 'Última calibração: 1 dia atrás',
                 'Estado: Precisa de manutenção',
               ],
+              dadosGrafico: [
+                FlSpot(0, 670),
+                FlSpot(1, 680),
+                FlSpot(2, 690),
+                FlSpot(3, 700),
+                FlSpot(4, 710),
+                FlSpot(5, 700),
+                FlSpot(6, luminosidade),
+              ],
+              corGrafico: Colors.amber,
             ),
             _buildSensorExpansionTile(
               icon: Icons.science,
@@ -93,6 +124,16 @@ class _SensoresState extends State<Sensores> {
                 'Última calibração: 2 dias atrás',
                 'Estado: Bom',
               ],
+              dadosGrafico: [
+                FlSpot(0, 6.0),
+                FlSpot(1, 6.1),
+                FlSpot(2, 6.2),
+                FlSpot(3, 6.3),
+                FlSpot(4, 6.4),
+                FlSpot(5, 6.3),
+                FlSpot(6, ph),
+              ],
+              corGrafico: Colors.purple,
             ),
             _buildSensorExpansionTile(
               icon: Icons.cloud,
@@ -107,6 +148,16 @@ class _SensoresState extends State<Sensores> {
                 'Última calibração: 4 dias atrás',
                 'Estado: Bom',
               ],
+              dadosGrafico: [
+                FlSpot(0, 50),
+                FlSpot(1, 52),
+                FlSpot(2, 54),
+                FlSpot(3, 56),
+                FlSpot(4, 55),
+                FlSpot(5, 54),
+                FlSpot(6, qualidadeAr),
+              ],
+              corGrafico: Colors.green,
             ),
             const SizedBox(height: 24),
             Center(
@@ -119,8 +170,10 @@ class _SensoresState extends State<Sensores> {
                 ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.teal,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 12,
+                  ),
                 ),
               ),
             ),
@@ -140,6 +193,8 @@ class _SensoresState extends State<Sensores> {
     required String value,
     required Color color,
     required List<String> detalhes,
+    required List<FlSpot> dadosGrafico,
+    required Color corGrafico,
   }) {
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 8),
@@ -149,30 +204,137 @@ class _SensoresState extends State<Sensores> {
         leading: Icon(icon, color: color, size: 30),
         title: Text(title, style: const TextStyle(fontWeight: FontWeight.w600)),
         subtitle: Text(value, style: const TextStyle(fontSize: 16)),
-        childrenPadding:
-            const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        children: detalhes.map((texto) {
-          final isStatusLine = texto.contains('Status:');
-          final isAtivo = texto.contains('Ativo');
+        childrenPadding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 8,
+        ),
+        children: [
+          ...detalhes.map((texto) {
+            final isStatusLine = texto.contains('Status:');
+            final isAtivo = texto.contains('Ativo');
 
-          return Align(
-            alignment: Alignment.centerLeft,
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 4),
-              child: Text(
-                '• $texto',
+            return Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 4),
+                child: Text(
+                  '• $texto',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color:
+                        isStatusLine
+                            ? (isAtivo ? Colors.green : Colors.red)
+                            : Colors.black87,
+                    fontWeight:
+                        isStatusLine ? FontWeight.bold : FontWeight.normal,
+                  ),
+                ),
+              ),
+            );
+          }),
+          const SizedBox(height: 16),
+          Row(
+            children: [
+              Text(
+                'Histórico (útimos 7 dias)',
                 style: TextStyle(
-                  fontSize: 14,
-                  color: isStatusLine
-                      ? (isAtivo ? Colors.green : Colors.red)
-                      : Colors.black87,
-                  fontWeight:
-                      isStatusLine ? FontWeight.bold : FontWeight.normal,
+                  fontWeight: FontWeight.bold,
+                  color: corGrafico,
+                  fontSize: 16,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          SizedBox(
+            height: 180,
+            child: LineChart(
+              LineChartData(
+                minX: 0,
+                maxX: 6,
+                minY: 0,
+                maxY:
+                    dadosGrafico
+                        .map((e) => e.y)
+                        .reduce((a, b) => a > b ? a : b) *
+                    1.3,
+                titlesData: FlTitlesData(
+                  leftTitles: AxisTitles(
+                    sideTitles: SideTitles(
+                      showTitles: true,
+                      reservedSize: 36,
+                      getTitlesWidget: (value, _) {
+                        return Text(
+                          value.toInt().toString(),
+                          style: const TextStyle(
+                            fontSize: 12,
+                            color: Colors.black87,
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  bottomTitles: AxisTitles(
+                    sideTitles: SideTitles(
+                      showTitles: true,
+                      reservedSize: 20,
+                      getTitlesWidget: (value, _) {
+                        const labels = [
+                          '6d',
+                          '5d',
+                          '4d',
+                          '3d',
+                          '2d',
+                          '1d',
+                          'Hoje',
+                        ];
+                        return Text(
+                          labels[value.toInt()],
+                          style: const TextStyle(fontSize: 12),
+                        );
+                      },
+                    ),
+                  ),
+                  rightTitles: AxisTitles(
+                    sideTitles: SideTitles(showTitles: false),
+                  ),
+                  topTitles: AxisTitles(
+                    sideTitles: SideTitles(showTitles: false),
+                  ),
+                ),
+                gridData: FlGridData(show: true),
+                borderData: FlBorderData(
+                  show: true,
+                  border: Border.all(color: Colors.black26),
+                ),
+                lineBarsData: [
+                  LineChartBarData(
+                    spots: dadosGrafico,
+                    isCurved: true,
+                    color: corGrafico,
+                    barWidth: 3,
+                    isStrokeCapRound: true,
+                    belowBarData: BarAreaData(
+                      show: true,
+                      color: corGrafico.withOpacity(0.2),
+                    ),
+                    dotData: FlDotData(show: true),
+                  ),
+                ],
+                lineTouchData: LineTouchData(
+                  handleBuiltInTouches: true,
+                  touchTooltipData: LineTouchTooltipData(
+                    tooltipBgColor: Colors.black.withOpacity(0.7),
+                    tooltipRoundedRadius: 10,
+                    fitInsideHorizontally: true,
+                    fitInsideVertically: true,
+                  ),
                 ),
               ),
             ),
-          );
-        }).toList(),
+          ),
+          const SizedBox(height: 16),
+        ],
       ),
     );
   }
