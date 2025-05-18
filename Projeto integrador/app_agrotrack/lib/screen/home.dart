@@ -26,7 +26,7 @@ class Home extends StatelessWidget {
               ),
               const SizedBox(height: 16),
 
-              // Card agrupado do sistema
+              // Card agrupado Status do sistema
               _buildGroupedCard([
                 _buildItem(
                     icon: Icons.check_circle_outline,
@@ -57,7 +57,7 @@ class Home extends StatelessWidget {
               ),
               const SizedBox(height: 16),
 
-              // Card agrupado dos sensores
+              // Card agrupado dos sensores em tempo real
               _buildGroupedCard([
                 _buildItem(
                   icon: Icons.thermostat,
@@ -98,7 +98,7 @@ class Home extends StatelessWidget {
               ),
               const SizedBox(height: 16),
 
-              // Card agrupado das plantas
+              // Card agrupado das plantaçoes em tempo real
               _buildGroupedCard([
                 _buildItem(
                     icon: Icons.eco, title: 'Alface', value: 'Em crescimento'),
