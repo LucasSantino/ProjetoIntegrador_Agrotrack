@@ -29,25 +29,29 @@ class Home extends StatelessWidget {
               // Card agrupado Status do sistema
               _buildGroupedCard([
                 _buildItem(
-                    icon: Icons.check_circle_outline,
-                    title: 'Status Geral',
-                    value: 'Tudo funcionando normalmente',
-                    color: Colors.green),
+                  icon: Icons.check_circle_outline,
+                  title: 'Status Geral',
+                  value: 'Tudo funcionando normalmente',
+                  color: Colors.green,
+                ),
                 _buildItem(
-                    icon: Icons.warning_amber_outlined,
-                    title: 'Alerta',
-                    value: 'Nenhum alerta no momento',
-                    color: Colors.orange),
+                  icon: Icons.warning_amber_outlined,
+                  title: 'Alerta',
+                  value: 'Nenhum alerta no momento',
+                  color: Colors.orange,
+                ),
                 _buildItem(
-                    icon: Icons.water,
-                    title: 'Bomba de Irrigação',
-                    value: 'Ligada',
-                    color: Colors.blue),
+                  icon: Icons.water,
+                  title: 'Bomba de Irrigação',
+                  value: 'Ligada',
+                  color: Colors.blue,
+                ),
                 _buildItem(
-                    icon: Icons.autorenew,
-                    title: 'Funcionamento da Bomba',
-                    value: 'Automático',
-                    color: Colors.teal),
+                  icon: Icons.autorenew,
+                  title: 'Funcionamento da Bomba',
+                  value: 'Automático',
+                  color: Colors.teal,
+                ),
               ]),
 
               const SizedBox(height: 24),
@@ -93,7 +97,7 @@ class Home extends StatelessWidget {
 
               const SizedBox(height: 24),
               Text(
-                'Plantas Cultivadas:',
+                'Plantações em andamento:',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
               ),
               const SizedBox(height: 16),
@@ -101,15 +105,20 @@ class Home extends StatelessWidget {
               // Card agrupado das plantaçoes em tempo real
               _buildGroupedCard([
                 _buildItem(
-                    icon: Icons.eco, title: 'Alface', value: 'Em crescimento'),
+                  icon: Icons.eco,
+                  title: 'Alface',
+                  value: 'Em crescimento',
+                ),
                 _buildItem(
-                    icon: Icons.eco,
-                    title: 'Tomate',
-                    value: 'Pronta para colheita'),
+                  icon: Icons.eco,
+                  title: 'Tomate',
+                  value: 'Pronta para colheita',
+                ),
                 _buildItem(
-                    icon: Icons.eco,
-                    title: 'Cenoura',
-                    value: 'Plantada recentemente'),
+                  icon: Icons.eco,
+                  title: 'Cenoura',
+                  value: 'Plantada recentemente',
+                ),
               ]),
             ],
           ),
@@ -124,9 +133,7 @@ class Home extends StatelessWidget {
       elevation: 4,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
-        child: Column(
-          children: children,
-        ),
+        child: Column(children: children),
       ),
     );
   }
@@ -149,10 +156,7 @@ class Home extends StatelessWidget {
               style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
             ),
           ),
-          Text(
-            value,
-            style: TextStyle(fontSize: 12, color: Colors.black54),
-          ),
+          Text(value, style: TextStyle(fontSize: 12, color: Colors.black54)),
         ],
       ),
     );
