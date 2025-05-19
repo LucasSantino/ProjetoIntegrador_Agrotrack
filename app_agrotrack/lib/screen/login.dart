@@ -154,6 +154,7 @@ class _LoginState extends State<Login> {
                       child: const Text(
                         'Entrar',
                         style: TextStyle(
+                          color: Color.fromRGBO(255, 255, 255, 1),
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),
