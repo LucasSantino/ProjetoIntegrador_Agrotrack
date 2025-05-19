@@ -48,7 +48,7 @@ class _NavScreenState extends State<NavScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: primaryColor,
+        backgroundColor: const Color.fromRGBO(0, 150, 136, 1),
         centerTitle: true, // centraliza o conteúdo do title
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
