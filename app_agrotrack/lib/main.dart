@@ -4,17 +4,24 @@ import 'package:app_agrotrack/screen/sensores.dart';
 import 'package:app_agrotrack/screen/automacao.dart';
 import 'package:app_agrotrack/screen/cultivo.dart';
 import 'package:app_agrotrack/screen/chatbot.dart';
+import 'package:app_agrotrack/screen/login.dart'; 
 
 void main() {
-  runApp(NavBottom());
+  runApp(const AgroTrackApp());
 }
 
-class NavBottom extends StatelessWidget {
-  const NavBottom({super.key});
+class AgroTrackApp extends StatelessWidget {
+  const AgroTrackApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(debugShowCheckedModeBanner: false, home: NavScreen());
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: const Login(), // Tela inicial
+      routes: {
+        '/nav': (context) => const NavScreen(), // Rota para navegação principal
+      },
+    );
   }
 }
 
@@ -48,8 +55,8 @@ class _NavScreenState extends State<NavScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromRGBO(0, 150, 136, 1),
-        centerTitle: true, // centraliza o conteúdo do title
+        backgroundColor: primaryColor,
+        centerTitle: true,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
@@ -57,7 +64,7 @@ class _NavScreenState extends State<NavScreen> {
             Image.asset(
               'assets/images/logo_AgroTrack.png',
               height: 180,
-              color: Colors.white, // deixa a imagem branca
+              color: Colors.white,
             ),
             const SizedBox(width: 8),
             const Text(
@@ -86,7 +93,7 @@ class _NavScreenState extends State<NavScreen> {
           BottomNavigationBarItem(icon: Icon(Icons.water), label: 'Automação'),
           BottomNavigationBarItem(
             icon: Icon(Icons.agriculture),
-            label: 'Pantações',
+            label: 'Plantações',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.smart_toy),
