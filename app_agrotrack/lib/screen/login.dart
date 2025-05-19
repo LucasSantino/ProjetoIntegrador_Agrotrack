@@ -133,7 +133,7 @@ class _LoginState extends State<Login> {
                         // Tela de recuperação futura
                       },
                       child: const Text(
-                        'Esqueci minha senha',
+                        'Não tem conta? Cadastre-se!!',
                         style: TextStyle(color: Color.fromRGBO(0, 150, 136, 1)),
                       ),
                     ),
