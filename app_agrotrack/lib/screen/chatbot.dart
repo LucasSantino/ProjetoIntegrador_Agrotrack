@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
 
 class Chatbot extends StatefulWidget {
   const Chatbot({super.key});
@@ -22,18 +25,65 @@ class _ChatbotState extends State<Chatbot> {
     {'text': 'AgroIoT', 'isMe': false, 'time': '5:38 PM'},
   ];
 
-  void _sendMessage() {
+  // API LANGFLOW
+  void _sendMessage() async {
+    final userMessage = _controller.text.trim();
+    String url =
+        "https://rsvictor-chat-bot.hf.space/api/v1/run/c86f7bc8-bbed-48a8-8a74-af9dd2d6f779";
+    
     if (_controller.text.trim().isEmpty) return;
     setState(() {
       _messages.add({
-        'text': _controller.text.trim(),
+        'text': userMessage,
         'isMe': true,
+        // pega a data e hora da mensagem digitada
         'time': TimeOfDay.now().format(context),
       });
-      _controller.clear(); // Limpa o campo após o envio
+      _controller.clear();
     });
-  }
+    try {
+      final response = await http.post(
+        Uri.parse(url),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode({
+          "input_value": userMessage,
+          "output_type": "chat",
+          "input_type": "chat",
+        }),
+      );
 
+      if (response.statusCode == 200) {
+        final decoded = jsonDecode(utf8.decode(response.bodyBytes));
+        print("Resposta a API: $decoded");
+        final botReply =
+            decoded["outputs"]?[0]?["outputs"]?[0]?["results"]?["message"]?["text"] ??
+            "Não consegui entender";
+        setState(() {
+          _messages.add({
+            'text': botReply,
+            'isMe': false,
+            'time': TimeOfDay.now().format(context),
+          });
+        });
+      } else {
+        setState(() {
+          _messages.add({
+            'text': 'Erro ao obter resposta do assistente',
+            'isMe': false,
+            'time': TimeOfDay.now().format(context),
+          });
+        });
+      }
+    } catch (e) {
+      setState(() {
+        _messages.add({
+          'text': 'Erro de conexão $e',
+          'isMe': false,
+          'time': TimeOfDay.now().format(context),
+        });
+      });
+    }
+  }
   void _clearMessages() {
     setState(() {
       _messages.clear();
