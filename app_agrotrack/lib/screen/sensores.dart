@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fl_chart/fl_chart.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class Sensores extends StatefulWidget {
   const Sensores({super.key});
@@ -9,19 +10,31 @@ class Sensores extends StatefulWidget {
 }
 
 class _SensoresState extends State<Sensores> {
-  double temperatura = 28.0;
-  double umidade = 42.0;
-  double luminosidade = 700.0;
-  double ph = 6.5;
-  double qualidadeAr = 55.0;
+  String url = "apiprojetointegrador-production-99a0.up.railway.app/dados";
 
-  void atualizarDados() {
+  final bool status = false;
+  Color status_cor = Colors.red;
+  int? temperatura;
+  int? umidade;
+  int? bomba;
+  int? sensorUmidSolo;
+  int? pH;
+
+  Future<void> _leitura() async {
+    final response = await http.get(Uri.parse(url));
+    print(response.body);
+    final dados = json.decode(response.body);
     setState(() {
-      temperatura = 26.0 + (2 * (1 - 2 * (DateTime.now().second % 2)));
-      umidade = 40.0 + (2 * (DateTime.now().second % 3));
-      luminosidade = 680 + (DateTime.now().second % 40);
-      ph = 6.0 + ((DateTime.now().second % 10) / 10);
-      qualidadeAr = 50.0 + (DateTime.now().second % 10);
+      temperatura = (dados["temperatura"]);
+      umidade = (dados["umidade"]);
+      sensorUmidSolo = (dados["sensor_umidsolo"]);
+      pH = (dados["pH"]);
+      bomba = dados["bomba"];
+      print(temperatura);
+      print(umidade);
+      print(sensorUmidSolo);
+      print(pH);
+      print(bomba);
     });
   }
 
@@ -39,7 +52,7 @@ class _SensoresState extends State<Sensores> {
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 24),
-            _buildSensorExpansionTile(
+           /*_buildSensorExpansionTile(
               icon: Icons.thermostat,
               title: 'Temperatura',
               value: '$temperatura °C',
@@ -51,7 +64,8 @@ class _SensoresState extends State<Sensores> {
                 'Última leitura: Agora',
                 'Última calibração: 2 dias atrás',
                 'Estado: Bom',
-              ],
+              ],*/
+              /*
               dadosGrafico: [
                 FlSpot(0, 26),
                 FlSpot(1, 27),
@@ -63,7 +77,8 @@ class _SensoresState extends State<Sensores> {
               ],
               corGrafico: Colors.red,
             ),
-            _buildSensorExpansionTile(
+            */
+              /*  _buildSensorExpansionTile(
               icon: Icons.water_drop,
               title: 'Umidade do Solo',
               value: '$umidade %',
@@ -90,7 +105,7 @@ class _SensoresState extends State<Sensores> {
             _buildSensorExpansionTile(
               icon: Icons.wb_sunny,
               title: 'Luminosidade',
-              value: '$luminosidade lux',
+              value: 'ph',
               color: Colors.amber,
               detalhes: [
                 'Nível adequado: 600 a 800 lux',
@@ -107,7 +122,7 @@ class _SensoresState extends State<Sensores> {
                 FlSpot(3, 700),
                 FlSpot(4, 710),
                 FlSpot(5, 700),
-                FlSpot(6, luminosidade),
+                FlSpot(6, pH),
               ],
               corGrafico: Colors.amber,
             ),
@@ -131,14 +146,14 @@ class _SensoresState extends State<Sensores> {
                 FlSpot(3, 6.3),
                 FlSpot(4, 6.4),
                 FlSpot(5, 6.3),
-                FlSpot(6, ph),
+                FlSpot(6, pH),
               ],
               corGrafico: Colors.purple,
             ),
             _buildSensorExpansionTile(
               icon: Icons.cloud,
               title: 'Qualidade do Ar',
-              value: '$qualidadeAr %',
+              value: 'ph %',
               color: Colors.green,
               detalhes: [
                 'Nível adequado: Acima de 50%',
@@ -149,20 +164,22 @@ class _SensoresState extends State<Sensores> {
                 'Estado: Bom',
               ],
               dadosGrafico: [
-                FlSpot(0, 50),
-                FlSpot(1, 52),
-                FlSpot(2, 54),
-                FlSpot(3, 56),
-                FlSpot(4, 55),
-                FlSpot(5, 54),
-                FlSpot(6, qualidadeAr),
+               // FlSpot(0, 50),
+                //FlSpot(1, 52),
+                //FlSpot(2, 54),
+                //FlSpot(3, 56),
+                //FlSpot(4, 55),
+                //FlSpot(5, 54),
+                //FlSpot(6, qualidadeAr),
               ],
               corGrafico: Colors.green,
             ),
+            */
+          ]),
             const SizedBox(height: 24),
             Center(
               child: ElevatedButton.icon(
-                onPressed: atualizarDados,
+                onPressed: _leitura,
                 icon: const Icon(Icons.refresh, color: Colors.white),
                 label: const Text(
                   'Atualizar Dados',
@@ -177,6 +194,7 @@ class _SensoresState extends State<Sensores> {
                 ),
               ),
             ),
+            ElevatedButton(onPressed: _leitura, child: Text('Leitura')),
           ],
         ),
       ),
@@ -246,7 +264,8 @@ class _SensoresState extends State<Sensores> {
             ],
           ),
           const SizedBox(height: 8),
-          SizedBox(
+          
+          /*SizedBox(
             height: 180,
             child: LineChart(
               LineChartData(
@@ -334,6 +353,7 @@ class _SensoresState extends State<Sensores> {
             ),
           ),
           const SizedBox(height: 16),
+        ],)*/
         ],
       ),
     );
