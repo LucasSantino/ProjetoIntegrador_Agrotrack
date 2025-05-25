@@ -4,7 +4,7 @@ import 'package:app_agrotrack/screen/sensores.dart';
 import 'package:app_agrotrack/screen/automacao.dart';
 import 'package:app_agrotrack/screen/cultivo.dart';
 import 'package:app_agrotrack/screen/chatbot.dart';
-import 'package:app_agrotrack/screen/login.dart'; 
+import 'package:app_agrotrack/screen/login.dart';
 
 void main() {
   runApp(const AgroTrackApp());
@@ -17,9 +17,10 @@ class AgroTrackApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const Login(), // Tela inicial
+      home: const Login(),
       routes: {
-        '/nav': (context) => const NavScreen(), // Rota para navegação principal
+        '/nav': (context) => const NavScreen(),
+        '/login': (context) => const Login(),
       },
     );
   }
@@ -51,6 +52,60 @@ class _NavScreenState extends State<NavScreen> {
 
   static const Color primaryColor = Color.fromRGBO(0, 150, 136, 1);
 
+  void _mostrarDialogoLogout(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          backgroundColor: Colors.white,
+          title: const Text(
+            "Deseja finalizar a sua sessão?",
+            style: TextStyle(
+              color: primaryColor,
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          actionsAlignment: MainAxisAlignment.spaceEvenly,
+          actions: [
+            TextButton(
+              style: TextButton.styleFrom(
+                backgroundColor: Colors.grey[300],
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              child: const Text("Não", style: TextStyle(color: Colors.black)),
+              onPressed: () {
+                Navigator.of(context).pop(); // Fecha o diálogo
+              },
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                backgroundColor: primaryColor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              child: const Text("Sim", style: TextStyle(color: Colors.white)),
+              onPressed: () {
+                Navigator.of(context).pop(); // Fecha o diálogo
+                Navigator.pushReplacementNamed(
+                  context,
+                  '/login',
+                ); // Retorna para login
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,6 +131,12 @@ class _NavScreenState extends State<NavScreen> {
             ),
           ],
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.logout, color: Colors.white),
+            onPressed: () => _mostrarDialogoLogout(context),
+          ),
+        ],
       ),
       body: Center(child: _widgetOptions[selectindex]()),
       bottomNavigationBar: BottomNavigationBar(
