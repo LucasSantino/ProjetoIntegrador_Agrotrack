@@ -31,7 +31,6 @@ class _LoginState extends State<Login> {
         context,
       ).showSnackBar(const SnackBar(content: Text('Realizando login...')));
 
-      // Redirecionar para a tela principal (NavScreen)
       await Future.delayed(const Duration(milliseconds: 800));
       Navigator.pushReplacement(
         context,
@@ -49,7 +48,7 @@ class _LoginState extends State<Login> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const SizedBox(height: 60), // Aumenta o espaço no topo
+            const SizedBox(height: 60), // Espaço topo
             SizedBox(
               height: 120,
               child: Image.asset(
@@ -143,7 +142,7 @@ class _LoginState extends State<Login> {
                       child: const Text(
                         'Entrar',
                         style: TextStyle(
-                          color: Colors.white, // Texto branco
+                          color: Colors.white,
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),
@@ -157,14 +156,13 @@ class _LoginState extends State<Login> {
                       const Text("Não tem conta? "),
                       GestureDetector(
                         onTap: () {
-                          Navigator.push(
+                          Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
                               builder: (_) => const CadastroUsuario(),
                             ),
                           );
                         },
-
                         child: const Text(
                           "Cadastre-se",
                           style: TextStyle(

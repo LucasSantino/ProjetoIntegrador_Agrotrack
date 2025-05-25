@@ -110,6 +110,8 @@ class _NavScreenState extends State<NavScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading:
+            false, // <<< aqui, elimina a seta preta "voltar"
         backgroundColor: primaryColor,
         centerTitle: true,
         title: Row(
