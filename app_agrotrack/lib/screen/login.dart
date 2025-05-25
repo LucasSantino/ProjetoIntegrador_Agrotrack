@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:app_agrotrack/main.dart'; // Importa o NavScreen
+import 'cadastousuario.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -48,6 +49,7 @@ class _LoginState extends State<Login> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            const SizedBox(height: 60), // Aumenta o espaço no topo
             SizedBox(
               height: 120,
               child: Image.asset(
@@ -55,7 +57,7 @@ class _LoginState extends State<Login> {
                 fit: BoxFit.contain,
               ),
             ),
-            const SizedBox(height: 40),
+            const SizedBox(height: 50),
             const Text(
               'Bem-vindo ao Agrotrack',
               style: TextStyle(
@@ -64,7 +66,7 @@ class _LoginState extends State<Login> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 32),
+            const SizedBox(height: 40),
             Form(
               key: _formKey,
               child: Column(
@@ -125,19 +127,6 @@ class _LoginState extends State<Login> {
                       return null;
                     },
                   ),
-                  const SizedBox(height: 16),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: TextButton(
-                      onPressed: () {
-                        // Tela de recuperação futura
-                      },
-                      child: const Text(
-                        'Não tem conta? Cadastre-se!!',
-                        style: TextStyle(color: Color.fromRGBO(0, 150, 136, 1)),
-                      ),
-                    ),
-                  ),
                   const SizedBox(height: 30),
                   SizedBox(
                     width: double.infinity,
@@ -154,12 +143,38 @@ class _LoginState extends State<Login> {
                       child: const Text(
                         'Entrar',
                         style: TextStyle(
-                          color: Color.fromRGBO(255, 255, 255, 1),
+                          color: Colors.white, // Texto branco
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
+                  ),
+                  const SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text("Não tem conta? "),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => const CadastroUsuario(),
+                            ),
+                          );
+                        },
+
+                        child: const Text(
+                          "Cadastre-se",
+                          style: TextStyle(
+                            color: Color.fromRGBO(0, 150, 136, 1),
+                            fontWeight: FontWeight.bold,
+                            decoration: TextDecoration.underline,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
