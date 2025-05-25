@@ -9,6 +9,7 @@ class Cultivo extends StatefulWidget {
 class _CultivoState extends State<Cultivo> {
   String? filtroSolo;
   String? filtroMes;
+  String filtroNome = '';
 
   final List<Map<String, dynamic>> culturasCadastradas = [
     {
@@ -62,11 +63,20 @@ class _CultivoState extends State<Cultivo> {
   Widget build(BuildContext context) {
     List<Map<String, dynamic>> culturasFiltradas =
         culturasCadastradas.where((cultura) {
-          bool soloCond = filtroSolo == null || cultura['solo'] == filtroSolo;
+          bool soloCond =
+              filtroSolo == null ||
+              filtroSolo == '' ||
+              cultura['solo'] == filtroSolo;
           bool mesCond =
               filtroMes == null ||
+              filtroMes == '' ||
               cultura['dataPlantio'].toString().contains(filtroMes!);
-          return soloCond && mesCond;
+          bool nomeCond =
+              filtroNome.isEmpty ||
+              cultura['nome'].toString().toLowerCase().contains(
+                filtroNome.toLowerCase(),
+              );
+          return soloCond && mesCond && nomeCond;
         }).toList();
 
     return Scaffold(
@@ -103,10 +113,11 @@ class _CultivoState extends State<Cultivo> {
 
             const SizedBox(height: 16),
 
-            // Filtros minimalistas
+            // Filtros minimalistas lado a lado com tamanho menor
             Row(
               children: [
                 Expanded(
+                  flex: 2,
                   child: DropdownButtonFormField<String>(
                     value: filtroSolo,
                     decoration: InputDecoration(
@@ -123,6 +134,7 @@ class _CultivoState extends State<Cultivo> {
                       ),
                       contentPadding: const EdgeInsets.symmetric(
                         horizontal: 12,
+                        vertical: 10,
                       ),
                     ),
                     items:
@@ -139,14 +151,17 @@ class _CultivoState extends State<Cultivo> {
                         filtroSolo = value;
                       });
                     },
+                    isDense: true,
+                    isExpanded: true,
                   ),
                 ),
-                const SizedBox(width: 12),
+                const SizedBox(width: 8),
                 Expanded(
+                  flex: 2,
                   child: DropdownButtonFormField<String>(
                     value: filtroMes,
                     decoration: InputDecoration(
-                      labelText: 'Mês de Plantio',
+                      labelText: 'Mês',
                       labelStyle: const TextStyle(color: Colors.black54),
                       focusedBorder: OutlineInputBorder(
                         borderSide: const BorderSide(
@@ -159,6 +174,7 @@ class _CultivoState extends State<Cultivo> {
                       ),
                       contentPadding: const EdgeInsets.symmetric(
                         horizontal: 12,
+                        vertical: 10,
                       ),
                     ),
                     items:
@@ -175,12 +191,50 @@ class _CultivoState extends State<Cultivo> {
                         filtroMes = value;
                       });
                     },
+                    isDense: true,
+                    isExpanded: true,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  flex: 3,
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      labelText: 'Buscar por nome',
+                      labelStyle: const TextStyle(color: Colors.black54),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                          color: Color.fromRGBO(0, 150, 136, 1),
+                        ),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 10,
+                      ),
+                    ),
+                    onChanged: (value) {
+                      setState(() {
+                        filtroNome = value;
+                      });
+                    },
                   ),
                 ),
               ],
             ),
 
             const SizedBox(height: 24),
+
+            if (culturasFiltradas.isEmpty)
+              Center(
+                child: Text(
+                  'Nenhuma plantação encontrada.',
+                  style: TextStyle(color: Colors.grey[600]),
+                ),
+              ),
 
             for (var cultura in culturasFiltradas)
               Card(
@@ -198,7 +252,7 @@ class _CultivoState extends State<Cultivo> {
                     padding: const EdgeInsets.only(right: 20),
                     child: Icon(
                       cultura['imagem'],
-                      color: Colors.green,
+                      color: const Color.fromRGBO(0, 150, 136, 1),
                       size: 32,
                     ),
                   ),
