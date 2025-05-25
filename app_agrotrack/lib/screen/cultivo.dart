@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
 import 'cadastrocultivo.dart'; // importe a nova tela
 
-class Cultivo extends StatelessWidget {
+class Cultivo extends StatefulWidget {
+  @override
+  _CultivoState createState() => _CultivoState();
+}
+
+class _CultivoState extends State<Cultivo> {
+  String? filtroSolo;
+  String? filtroMes;
+
   final List<Map<String, dynamic>> culturasCadastradas = [
     {
       'nome': 'Milho',
@@ -52,6 +60,15 @@ class Cultivo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<Map<String, dynamic>> culturasFiltradas =
+        culturasCadastradas.where((cultura) {
+          bool soloCond = filtroSolo == null || cultura['solo'] == filtroSolo;
+          bool mesCond =
+              filtroMes == null ||
+              cultura['dataPlantio'].toString().contains(filtroMes!);
+          return soloCond && mesCond;
+        }).toList();
+
     return Scaffold(
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
@@ -83,8 +100,89 @@ class Cultivo extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 12),
-            for (var cultura in culturasCadastradas)
+
+            const SizedBox(height: 16),
+
+            // Filtros minimalistas
+            Row(
+              children: [
+                Expanded(
+                  child: DropdownButtonFormField<String>(
+                    value: filtroSolo,
+                    decoration: InputDecoration(
+                      labelText: 'Solo',
+                      labelStyle: const TextStyle(color: Colors.black54),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                          color: Color.fromRGBO(0, 150, 136, 1),
+                        ),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                      ),
+                    ),
+                    items:
+                        ['Argiloso', 'Arenoso', 'Orgânico']
+                            .map(
+                              (solo) => DropdownMenuItem(
+                                value: solo,
+                                child: Text(solo),
+                              ),
+                            )
+                            .toList(),
+                    onChanged: (value) {
+                      setState(() {
+                        filtroSolo = value;
+                      });
+                    },
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: DropdownButtonFormField<String>(
+                    value: filtroMes,
+                    decoration: InputDecoration(
+                      labelText: 'Mês de Plantio',
+                      labelStyle: const TextStyle(color: Colors.black54),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                          color: Color.fromRGBO(0, 150, 136, 1),
+                        ),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                      ),
+                    ),
+                    items:
+                        ['01', '02', '03', '04', '05']
+                            .map(
+                              (mes) => DropdownMenuItem(
+                                value: mes,
+                                child: Text('Mês $mes'),
+                              ),
+                            )
+                            .toList(),
+                    onChanged: (value) {
+                      setState(() {
+                        filtroMes = value;
+                      });
+                    },
+                  ),
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 24),
+
+            for (var cultura in culturasFiltradas)
               Card(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
