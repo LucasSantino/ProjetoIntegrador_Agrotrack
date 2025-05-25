@@ -59,6 +59,25 @@ class _CultivoState extends State<Cultivo> {
     },
   ];
 
+  // Função auxiliar que converte mês número para nome do mês em português
+  String nomeDoMes(int mes) {
+    const meses = [
+      'Janeiro',
+      'Fevereiro',
+      'Março',
+      'Abril',
+      'Maio',
+      'Junho',
+      'Julho',
+      'Agosto',
+      'Setembro',
+      'Outubro',
+      'Novembro',
+      'Dezembro',
+    ];
+    return meses[mes - 1];
+  }
+
   @override
   Widget build(BuildContext context) {
     List<Map<String, dynamic>> culturasFiltradas =
@@ -67,15 +86,22 @@ class _CultivoState extends State<Cultivo> {
               filtroSolo == null ||
               filtroSolo == '' ||
               cultura['solo'] == filtroSolo;
+
+          // Extrai o mês da dataPlantio no formato dd/MM/yyyy
+          final data = cultura['dataPlantio'].toString();
+          final partes = data.split('/');
+          int mesNumero = partes.length > 1 ? int.tryParse(partes[1]) ?? 0 : 0;
+          String mesNome = mesNumero > 0 ? nomeDoMes(mesNumero) : '';
+
           bool mesCond =
-              filtroMes == null ||
-              filtroMes == '' ||
-              cultura['dataPlantio'].toString().contains(filtroMes!);
+              filtroMes == null || filtroMes == '' || mesNome == filtroMes;
+
           bool nomeCond =
               filtroNome.isEmpty ||
               cultura['nome'].toString().toLowerCase().contains(
                 filtroNome.toLowerCase(),
               );
+
           return soloCond && mesCond && nomeCond;
         }).toList();
 
@@ -178,11 +204,24 @@ class _CultivoState extends State<Cultivo> {
                       ),
                     ),
                     items:
-                        ['01', '02', '03', '04', '05']
+                        [
+                              'Janeiro',
+                              'Fevereiro',
+                              'Março',
+                              'Abril',
+                              'Maio',
+                              'Junho',
+                              'Julho',
+                              'Agosto',
+                              'Setembro',
+                              'Outubro',
+                              'Novembro',
+                              'Dezembro',
+                            ]
                             .map(
                               (mes) => DropdownMenuItem(
                                 value: mes,
-                                child: Text('Mês $mes'),
+                                child: Text(mes),
                               ),
                             )
                             .toList(),
