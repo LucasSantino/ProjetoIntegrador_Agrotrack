@@ -7,8 +7,8 @@ class Cultivo extends StatefulWidget {
 }
 
 class _CultivoState extends State<Cultivo> {
-  String? filtroSolo;
-  String? filtroMes;
+  String filtroSolo = 'Todos';
+  String filtroMes = 'Todos';
   String filtroNome = '';
 
   final List<Map<String, dynamic>> culturasCadastradas = [
@@ -83,9 +83,7 @@ class _CultivoState extends State<Cultivo> {
     List<Map<String, dynamic>> culturasFiltradas =
         culturasCadastradas.where((cultura) {
           bool soloCond =
-              filtroSolo == null ||
-              filtroSolo == '' ||
-              cultura['solo'] == filtroSolo;
+              filtroSolo == 'Todos' || cultura['solo'] == filtroSolo;
 
           // Extrai o mês da dataPlantio no formato dd/MM/yyyy
           final data = cultura['dataPlantio'].toString();
@@ -93,8 +91,7 @@ class _CultivoState extends State<Cultivo> {
           int mesNumero = partes.length > 1 ? int.tryParse(partes[1]) ?? 0 : 0;
           String mesNome = mesNumero > 0 ? nomeDoMes(mesNumero) : '';
 
-          bool mesCond =
-              filtroMes == null || filtroMes == '' || mesNome == filtroMes;
+          bool mesCond = filtroMes == 'Todos' || mesNome == filtroMes;
 
           bool nomeCond =
               filtroNome.isEmpty ||
@@ -139,7 +136,7 @@ class _CultivoState extends State<Cultivo> {
 
             const SizedBox(height: 16),
 
-            // Filtros minimalistas lado a lado com tamanho menor
+            // Filtros com opção 'Todos'
             Row(
               children: [
                 Expanded(
@@ -164,7 +161,7 @@ class _CultivoState extends State<Cultivo> {
                       ),
                     ),
                     items:
-                        ['Argiloso', 'Arenoso', 'Orgânico']
+                        ['Todos', 'Argiloso', 'Arenoso', 'Orgânico']
                             .map(
                               (solo) => DropdownMenuItem(
                                 value: solo,
@@ -174,7 +171,7 @@ class _CultivoState extends State<Cultivo> {
                             .toList(),
                     onChanged: (value) {
                       setState(() {
-                        filtroSolo = value;
+                        filtroSolo = value ?? 'Todos';
                       });
                     },
                     isDense: true,
@@ -205,6 +202,7 @@ class _CultivoState extends State<Cultivo> {
                     ),
                     items:
                         [
+                              'Todos',
                               'Janeiro',
                               'Fevereiro',
                               'Março',
@@ -227,7 +225,7 @@ class _CultivoState extends State<Cultivo> {
                             .toList(),
                     onChanged: (value) {
                       setState(() {
-                        filtroMes = value;
+                        filtroMes = value ?? 'Todos';
                       });
                     },
                     isDense: true,
