@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-
 class Chatbot extends StatefulWidget {
   const Chatbot({super.key});
 
@@ -30,7 +29,7 @@ class _ChatbotState extends State<Chatbot> {
     final userMessage = _controller.text.trim();
     String url =
         "https://rsvictor-chat-bot.hf.space/api/v1/run/c86f7bc8-bbed-48a8-8a74-af9dd2d6f779";
-    
+
     if (_controller.text.trim().isEmpty) return;
     setState(() {
       _messages.add({
@@ -84,6 +83,7 @@ class _ChatbotState extends State<Chatbot> {
       });
     }
   }
+
   void _clearMessages() {
     setState(() {
       _messages.clear();
@@ -95,6 +95,7 @@ class _ChatbotState extends State<Chatbot> {
     return Scaffold(
       extendBodyBehindAppBar: true, // Permite que o corpo vá atrás da AppBar
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.transparent,
         elevation: 0,
         title: Row(
