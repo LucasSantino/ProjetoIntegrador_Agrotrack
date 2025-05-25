@@ -52,6 +52,10 @@ class _AutomacaoState extends State<Automacao> {
         trailing: Switch(
           value: ativo,
           onChanged: (_) => onPressed(),
+          activeColor: Colors.green, // cor do botão quando ligado
+          inactiveThumbColor: Colors.red, // cor do botão quando desligado
+          inactiveTrackColor:
+              Colors.red[200], // cor da faixa do switch desligado (mais clara)
         ),
       ),
     );
@@ -72,8 +76,9 @@ class _AutomacaoState extends State<Automacao> {
             for (var entry in sensoresAtivos.entries)
               Text(
                 '${entry.key}: ${entry.value ? "Ativo" : "Desativado"}',
-                style:
-                    TextStyle(color: entry.value ? Colors.green : Colors.red),
+                style: TextStyle(
+                  color: entry.value ? Colors.green : Colors.red,
+                ),
               ),
             const SizedBox(height: 6),
             Text(
@@ -118,10 +123,7 @@ class _AutomacaoState extends State<Automacao> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             for (var acao in historicoAcao)
-              Text(
-                acao,
-                style: TextStyle(fontSize: 12),
-              ),
+              Text(acao, style: TextStyle(fontSize: 12)),
           ],
         ),
       ),
