@@ -50,27 +50,6 @@ class Cultivo extends StatelessWidget {
     },
   ];
 
-  final List<Map<String, String>> sugestoesPlantio = [
-    {
-      'cultura': 'Cenoura',
-      'solo': 'Arenoso',
-      'epoca': 'Março a Junho',
-      'espacamento': '25 cm',
-    },
-    {
-      'cultura': 'Couve',
-      'solo': 'Argiloso',
-      'epoca': 'Maio a Setembro',
-      'espacamento': '35 cm',
-    },
-    {
-      'cultura': 'Rabanete',
-      'solo': 'Leve e arenoso',
-      'epoca': 'Abril a Julho',
-      'espacamento': '15 cm',
-    },
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,13 +67,17 @@ class Cultivo extends StatelessWidget {
                   style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                 ),
                 IconButton(
-                  icon: const Icon(Icons.add_circle,
-                      color: Color.fromRGBO(0, 150, 136, 1), size: 30),
+                  icon: const Icon(
+                    Icons.add_circle,
+                    color: Color.fromRGBO(0, 150, 136, 1),
+                    size: 30,
+                  ),
                   onPressed: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const CadastroCultivo()),
+                        builder: (context) => const CadastroCultivo(),
+                      ),
                     );
                   },
                 ),
@@ -104,20 +87,27 @@ class Cultivo extends StatelessWidget {
             for (var cultura in culturasCadastradas)
               Card(
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16)),
+                  borderRadius: BorderRadius.circular(16),
+                ),
                 elevation: 4,
                 margin: const EdgeInsets.symmetric(vertical: 8),
                 child: ListTile(
-                  // Ajuste do padding interno do ListTile para dar mais espaço geral
-                  contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                  // Adiciona padding extra ao ícone para aumentar distância das informações
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 12,
+                  ),
                   leading: Padding(
                     padding: const EdgeInsets.only(right: 20),
-                    child: Icon(cultura['imagem'], color: Colors.green, size: 32),
+                    child: Icon(
+                      cultura['imagem'],
+                      color: Colors.green,
+                      size: 32,
+                    ),
                   ),
-                  title: Text(cultura['nome'],
-                      style: const TextStyle(fontWeight: FontWeight.bold)),
+                  title: Text(
+                    cultura['nome'],
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -126,35 +116,6 @@ class Cultivo extends StatelessWidget {
                       Text('Espaçamento: ${cultura['espacamento']}'),
                       Text('Colheita prevista: ${cultura['colheita']}'),
                       Text('Tipo de solo: ${cultura['solo']}'),
-                    ],
-                  ),
-                ),
-              ),
-            const SizedBox(height: 24),
-            const Text('Sugestões de Plantio',
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 12),
-            for (var sugestao in sugestoesPlantio)
-              Card(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16)),
-                elevation: 4,
-                margin: const EdgeInsets.symmetric(vertical: 8),
-                child: ListTile(
-                  contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                  leading: const Padding(
-                    padding: EdgeInsets.only(right: 20),
-                    child: Icon(Icons.spa, color: Colors.teal, size: 32),
-                  ),
-                  title: Text(sugestao['cultura']!,
-                      style: const TextStyle(fontWeight: FontWeight.bold)),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('Solo ideal: ${sugestao['solo']}'),
-                      Text('Época ideal: ${sugestao['epoca']}'),
-                      Text('Espaçamento: ${sugestao['espacamento']}'),
                     ],
                   ),
                 ),
