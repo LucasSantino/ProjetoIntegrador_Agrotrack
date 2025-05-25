@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+
 class Automacao extends StatefulWidget {
   @override
   _AutomacaoState createState() => _AutomacaoState();
@@ -17,7 +16,6 @@ class _AutomacaoState extends State<Automacao> {
 
   // Agendamento manual (exemplo)
   String horarioAgendamento = "Irrigação agendada para: 06:00";
-  String url = "apiprojetointegrador-production-99a0.up.railway.app/bomba";
 
   // Simulação do estado dos sensores
   final Map<String, bool> sensoresAtivos = {
@@ -28,17 +26,10 @@ class _AutomacaoState extends State<Automacao> {
     'Qualidade do Ar': true,
   };
 
-  void _toggleBomba() async{
+  void _toggleBomba() {
     setState(() {
       bombaLigada = !bombaLigada;
-       final response = await http.post(
-        Uri.parse('https://apiintegradoresp-production.up.railway.app/bomba'),
-        headers: {'Content-Type': 'application/json'},
-        body: json.encode({'estado': bombaLigada}),
-        
-      );
     });
-    print("Bomba ${bombaLigada}");
   }
 
   Widget _buildAtuadorCard({
