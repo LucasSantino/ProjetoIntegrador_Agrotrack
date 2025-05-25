@@ -38,6 +38,7 @@ class _CadastroCultivoState extends State<CadastroCultivo> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: primaryColor,
+        iconTheme: const IconThemeData(color: Colors.white), // Ícone branco
         title: const Text(
           'Cadastrar Plantação',
           style: TextStyle(
@@ -60,41 +61,52 @@ class _CadastroCultivoState extends State<CadastroCultivo> {
                   child: CircleAvatar(
                     radius: 50,
                     backgroundColor: Colors.grey[300],
-                    backgroundImage: _imagemSelecionada != null
-                        ? FileImage(_imagemSelecionada!)
-                        : null,
-                    child: _imagemSelecionada == null
-                        ? const Icon(Icons.add_a_photo,
-                            size: 30, color: Colors.grey)
-                        : null,
+                    backgroundImage:
+                        _imagemSelecionada != null
+                            ? FileImage(_imagemSelecionada!)
+                            : null,
+                    child:
+                        _imagemSelecionada == null
+                            ? const Icon(
+                              Icons.add_a_photo,
+                              size: 30,
+                              color: Colors.grey,
+                            )
+                            : null,
                   ),
                 ),
               ),
               const SizedBox(height: 20),
               _buildTextField(
-                  controller: nomeController,
-                  label: 'Nome da cultura',
-                  icon: Icons.grass),
+                controller: nomeController,
+                label: 'Nome da cultura',
+                icon: Icons.grass,
+              ),
               _buildTextField(
-                  controller: dataController,
-                  label: 'Data de plantio',
-                  icon: Icons.date_range),
+                controller: dataController,
+                label: 'Data de plantio',
+                icon: Icons.date_range,
+              ),
               _buildTextField(
-                  controller: cicloController,
-                  label: 'Ciclo (dias)',
-                  icon: Icons.timelapse),
+                controller: cicloController,
+                label: 'Ciclo (dias)',
+                icon: Icons.timelapse,
+              ),
               _buildTextField(
-                  controller: espacamentoController,
-                  label: 'Espaçamento',
-                  icon: Icons.crop),
+                controller: espacamentoController,
+                label: 'Espaçamento',
+                icon: Icons.crop,
+              ),
               _buildTextField(
-                  controller: colheitaController,
-                  label: 'Colheita prevista',
-                  icon: Icons.event),
+                controller: colheitaController,
+                label: 'Colheita prevista',
+                icon: Icons.event,
+              ),
               _buildTextField(
-                  controller: soloController,
-                  label: 'Tipo de solo',
-                  icon: Icons.terrain),
+                controller: soloController,
+                label: 'Tipo de solo',
+                icon: Icons.terrain,
+              ),
               const SizedBox(height: 24),
               Center(
                 child: ElevatedButton.icon(
@@ -102,7 +114,8 @@ class _CadastroCultivoState extends State<CadastroCultivo> {
                     if (_formKey.currentState!.validate()) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
-                            content: Text('Cultura cadastrada com sucesso!')),
+                          content: Text('Cultura cadastrada com sucesso!'),
+                        ),
                       );
                     }
                   },
@@ -114,7 +127,9 @@ class _CadastroCultivoState extends State<CadastroCultivo> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.teal,
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 24, vertical: 12),
+                      horizontal: 24,
+                      vertical: 12,
+                    ),
                   ),
                 ),
               ),
@@ -137,9 +152,7 @@ class _CadastroCultivoState extends State<CadastroCultivo> {
         decoration: InputDecoration(
           labelText: label,
           prefixIcon: Icon(icon, color: primaryColor),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(16)),
         ),
         validator: (value) {
           if (value == null || value.isEmpty) {
