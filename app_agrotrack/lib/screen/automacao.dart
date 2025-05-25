@@ -8,16 +8,11 @@ class Automacao extends StatefulWidget {
 class _AutomacaoState extends State<Automacao> {
   bool bombaLigada = true;
 
-  // Histórico de ações automáticas (exemplo)
   List<String> historicoAcao = [
     "Bomba acionada automaticamente às 06:00 - Umidade: 28%",
     "Bomba desligada automaticamente às 07:00 - Umidade: 32%",
   ];
 
-  // Agendamento manual (exemplo)
-  String horarioAgendamento = "Irrigação agendada para: 06:00";
-
-  // Simulação do estado dos sensores
   final Map<String, bool> sensoresAtivos = {
     'Temperatura': true,
     'Umidade do Solo': true,
@@ -32,60 +27,82 @@ class _AutomacaoState extends State<Automacao> {
     });
   }
 
-  Widget _buildAtuadorCard({
-    required IconData icon,
-    required String titulo,
-    required bool ativo,
-    required VoidCallback onPressed,
-  }) {
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      elevation: 4,
-      margin: const EdgeInsets.symmetric(vertical: 8),
-      child: ListTile(
-        leading: Icon(icon, color: Colors.teal),
-        title: Text(titulo, style: TextStyle(fontWeight: FontWeight.bold)),
-        subtitle: Text(
-          ativo ? 'Status: Ativado' : 'Status: Desativado',
-          style: TextStyle(color: ativo ? Colors.green : Colors.red),
-        ),
-        trailing: Switch(
-          value: ativo,
-          onChanged: (_) => onPressed(),
-          activeColor: Colors.green, // cor do botão quando ligado
-          inactiveThumbColor: Colors.red, // cor do botão quando desligado
-          inactiveTrackColor:
-              Colors.red[200], // cor da faixa do switch desligado (mais clara)
-        ),
-      ),
-    );
-  }
-
-  Widget _buildSensorStatusCard() {
+  Widget _buildSistemaIrrigacaoCard() {
     bool todosAtivos = sensoresAtivos.values.every((ativo) => ativo);
 
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       elevation: 4,
       margin: const EdgeInsets.symmetric(vertical: 8),
-      child: ListTile(
-        leading: Icon(Icons.sensors, color: Colors.teal),
-        subtitle: Column(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            for (var entry in sensoresAtivos.entries)
-              Text(
-                '${entry.key}: ${entry.value ? "Ativo" : "Desativado"}',
+            // Controle da bomba
+            ListTile(
+              contentPadding: EdgeInsets.zero,
+              leading: Icon(Icons.water, color: Colors.teal),
+              title: Text(
+                'Bomba de Irrigação (Principal)',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              subtitle: Text(
+                bombaLigada ? 'Status: Ativado' : 'Status: Desativado',
                 style: TextStyle(
-                  color: entry.value ? Colors.green : Colors.red,
+                  color: bombaLigada ? Colors.green : Colors.red,
+                ),
+              ),
+              trailing: Switch(
+                value: bombaLigada,
+                onChanged: (_) => _toggleBomba(),
+                activeColor: Colors.green,
+                inactiveThumbColor: Colors.red,
+                inactiveTrackColor: Colors.red[200],
+              ),
+            ),
+
+            const SizedBox(height: 12),
+
+            // Título com ícone "Sensores Conectados"
+            Padding(
+              padding: const EdgeInsets.only(left: 8),
+              child: Row(
+                children: [
+                  Icon(Icons.sensors, color: Colors.teal),
+                  const SizedBox(width: 8),
+                  Text(
+                    'Sensores Conectados',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.teal[700],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 8),
+
+            for (var entry in sensoresAtivos.entries)
+              Padding(
+                padding: const EdgeInsets.only(left: 32, bottom: 2),
+                child: Text(
+                  '${entry.key}: ${entry.value ? "Ativo" : "Desativado"}',
+                  style: TextStyle(
+                    color: entry.value ? Colors.green : Colors.red,
+                  ),
                 ),
               ),
             const SizedBox(height: 6),
-            Text(
-              todosAtivos
-                  ? "Todos os sensores estão ativos"
-                  : "Alguns sensores estão desativados",
-              style: TextStyle(fontWeight: FontWeight.bold),
+            Padding(
+              padding: const EdgeInsets.only(left: 32),
+              child: Text(
+                todosAtivos
+                    ? "Todos os sensores estão ativos"
+                    : "Alguns sensores estão desativados",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
             ),
           ],
         ),
@@ -130,18 +147,6 @@ class _AutomacaoState extends State<Automacao> {
     );
   }
 
-  Widget _buildAgendamentoCard() {
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      elevation: 4,
-      margin: const EdgeInsets.symmetric(vertical: 8),
-      child: ListTile(
-        leading: Icon(Icons.schedule, color: Colors.teal),
-        subtitle: Text(horarioAgendamento),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -156,38 +161,23 @@ class _AutomacaoState extends State<Automacao> {
                 'Monitoramento do Sistema',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
-              const SizedBox(height: 24), // espaçamento entre o título e o card
+              const SizedBox(height: 24),
 
-              _buildAtuadorCard(
-                icon: Icons.water,
-                titulo: 'Bomba de Irrigação (Principal)',
-                ativo: bombaLigada,
-                onPressed: _toggleBomba,
-              ),
-              const SizedBox(height: 24), // espaçamento entre o título e o card
-              Text(
-                'Sensores Conectados',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              _buildSensorStatusCard(),
-              const SizedBox(height: 24), // espaçamento entre o título e o card
+              _buildSistemaIrrigacaoCard(),
+
+              const SizedBox(height: 24),
               Text(
                 'Regras de Irrigação',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               _buildRegrasCard(),
-              const SizedBox(height: 24), // espaçamento entre o título e o card
+
+              const SizedBox(height: 24),
               Text(
                 'Histórico de Ações Automáticas',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               _buildHistoricoCard(),
-              const SizedBox(height: 24), // espaçamento entre o título e o card
-              Text(
-                'Agendamento de Irrigação',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              _buildAgendamentoCard(),
             ],
           ),
         ),
