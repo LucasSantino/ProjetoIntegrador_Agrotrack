@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'cadastrocultivo.dart'; // importe a nova tela
 
 class Cultivo extends StatefulWidget {
+  const Cultivo({super.key});
+
   @override
   _CultivoState createState() => _CultivoState();
 }

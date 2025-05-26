@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class Automacao extends StatefulWidget {
+  const Automacao({super.key});
+
   @override
   _AutomacaoState createState() => _AutomacaoState();
 }
