@@ -279,47 +279,42 @@ class _CultivoState extends State<Cultivo> {
                     horizontal: 24,
                     vertical: 12,
                   ),
-                  child: IntrinsicHeight(
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(12),
-                          child: SizedBox(
-                            width: 128,
-                            height: 120,
-                            child: Image.asset(
-                              cultura['imagem'],
-                              fit: BoxFit.cover,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: SizedBox(
+                          width: 128,
+                          height: 110,
+                          child: Image.asset(
+                            cultura['imagem'],
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 20),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              cultura['nome'],
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                              ),
                             ),
-                          ),
+                            const SizedBox(height: 8),
+                            Text('Data de plantio: ${cultura['dataPlantio']}'),
+                            Text('Ciclo: ${cultura['ciclo']}'),
+                            Text('Espaçamento: ${cultura['espacamento']}'),
+                            Text('Colheita: ${cultura['colheita']}'),
+                            Text('Solo: ${cultura['solo']}'),
+                          ],
                         ),
-                        const SizedBox(width: 20),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                cultura['nome'],
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
-                                ),
-                              ),
-                              const SizedBox(height: 8),
-                              Text(
-                                'Data de plantio: ${cultura['dataPlantio']}',
-                              ),
-                              Text('Ciclo: ${cultura['ciclo']}'),
-                              Text('Espaçamento: ${cultura['espacamento']}'),
-                              Text('Colheita: ${cultura['colheita']}'),
-                              Text('Solo: ${cultura['solo']}'),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ),
