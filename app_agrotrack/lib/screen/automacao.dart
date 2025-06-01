@@ -1,14 +1,16 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class Automacao extends StatefulWidget {
   const Automacao({super.key});
 
   @override
-  _AutomacaoState createState() => _AutomacaoState();
+  AutomacaoState createState() => AutomacaoState();
 }
 
-class _AutomacaoState extends State<Automacao> {
-  bool bombaLigada = true;
+class AutomacaoState extends State<Automacao> {
+  bool bombaLigada = false;
 
   List<String> historicoAcao = [
     "Bomba acionada automaticamente às 06:00 - Umidade: 28%",
@@ -23,10 +25,35 @@ class _AutomacaoState extends State<Automacao> {
     'Qualidade do Ar': true,
   };
 
-  void _toggleBomba() {
-    setState(() {
-      bombaLigada = !bombaLigada;
-    });
+  final String apiUrl = 'http://10.0.2.2:8000'; // Para emulador Android
+
+  Future<void> _toggleBomba() async {
+    final int novoEstado = bombaLigada ? 0 : 1;
+
+    try {
+      final response = await http.post(
+        Uri.parse('$apiUrl/bomba'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({'estado': novoEstado}),
+      );
+
+      if (response.statusCode == 200) {
+        final resultado = jsonDecode(response.body);
+        debugPrint('API: ${resultado['mensagem']}');
+
+        setState(() {
+          bombaLigada = !bombaLigada;
+          historicoAcao.insert(
+            0,
+            "Bomba ${bombaLigada ? 'ligada' : 'desligada'} manualmente às ${TimeOfDay.now().format(context)}",
+          );
+        });
+      } else {
+        debugPrint('Erro ${response.statusCode}: ${response.body}');
+      }
+    } catch (e) {
+      debugPrint('Erro ao comunicar com API: $e');
+    }
   }
 
   Widget _buildSistemaIrrigacaoCard() {
@@ -41,7 +68,6 @@ class _AutomacaoState extends State<Automacao> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Controle da bomba
             ListTile(
               contentPadding: EdgeInsets.zero,
               leading: Icon(Icons.water, color: Colors.teal),
@@ -63,10 +89,7 @@ class _AutomacaoState extends State<Automacao> {
                 inactiveTrackColor: Colors.red[200],
               ),
             ),
-
             const SizedBox(height: 12),
-
-            // Título com ícone "Sensores Conectados"
             Padding(
               padding: const EdgeInsets.only(left: 8),
               child: Row(
@@ -85,7 +108,6 @@ class _AutomacaoState extends State<Automacao> {
               ),
             ),
             const SizedBox(height: 8),
-
             for (var entry in sensoresAtivos.entries)
               Padding(
                 padding: const EdgeInsets.only(left: 32, bottom: 2),
@@ -164,16 +186,13 @@ class _AutomacaoState extends State<Automacao> {
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 24),
-
               _buildSistemaIrrigacaoCard(),
-
               const SizedBox(height: 24),
               Text(
                 'Regras de Irrigação',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               _buildRegrasCard(),
-
               const SizedBox(height: 24),
               Text(
                 'Histórico de Ações Automáticas',
