@@ -13,22 +13,24 @@ class _ChatbotState extends State<Chatbot> {
   final TextEditingController _controller = TextEditingController();
 
   final List<Map<String, dynamic>> _messages = [
-    {'text': 'Tipos de solos agrícolas', 'isMe': true, 'time': '5:20 PM'},
-    {'text': 'Calcário, Argiloso', 'isMe': true, 'time': '5:18 PM'},
     {
-      'text': 'Qual a melhor semente para plantar em maio?',
+      'text':
+          'Ola seja bem vindo ao Agrotrack - Sistema de Monitoramento Inteligente',
       'isMe': false,
       'time': '5:28 PM',
     },
-    {'text': 'Chatbot', 'isMe': false, 'time': '5:30 PM'},
-    {'text': 'AgroIoT', 'isMe': false, 'time': '5:38 PM'},
+    {
+      'text': 'Sou o Agro-chatbot e estou aqui para te ajudar!',
+      'isMe': false,
+      'time': '5:30 PM',
+    },
   ];
 
   // API LANGFLOW
   void _sendMessage() async {
     final userMessage = _controller.text.trim();
     String url =
-        "https://rsvictor-chat-bot.hf.space/api/v1/run/c86f7bc8-bbed-48a8-8a74-af9dd2d6f779";
+        "https://rsvictor-chat-bot.hf.space/api/v1/run/dbeba695-56b5-499d-871e-2195f0f36ae2";
 
     if (_controller.text.trim().isEmpty) return;
     setState(() {
