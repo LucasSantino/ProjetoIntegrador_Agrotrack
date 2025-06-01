@@ -119,6 +119,21 @@ class Home extends StatelessWidget {
                   title: 'Cenoura',
                   value: 'Plantada recentemente',
                 ),
+                _buildItem(
+                  icon: Icons.eco,
+                  title: 'Milho',
+                  value: 'Plantada recentemente',
+                ),
+                _buildItem(
+                  icon: Icons.eco,
+                  title: 'Feijão',
+                  value: 'Pronta para colheita',
+                ),
+                _buildItem(
+                  icon: Icons.eco,
+                  title: 'Batata',
+                  value: 'Pronta para colheita',
+                ),
               ]),
             ],
           ),

@@ -15,6 +15,9 @@ class AutomacaoState extends State<Automacao> {
   List<String> historicoAcao = [
     "Bomba acionada automaticamente às 06:00 - Umidade: 28%",
     "Bomba desligada automaticamente às 07:00 - Umidade: 32%",
+    "Bomba acionada automaticamente às 13:00 - Umidade: 20%",
+    "Bomba desligada automaticamente às 14:00 - Umidade: 38%",
+    "Bomba acionada automaticamente às 17:25 - Umidade: 22%",
   ];
 
   final Map<String, bool> sensoresAtivos = {
@@ -144,9 +147,9 @@ class AutomacaoState extends State<Automacao> {
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: const [
-            Text("- Umidade do solo < 30% → Ativar bomba"),
-            Text("- Temperatura > 35°C → Ativar bomba"),
-            Text("- pH da água fora de 6.0–7.5 → Desativar bomba"),
+            Text("- Umidade do solo < 30%: Ativar bomba"),
+            Text("- Temperatura > 35°C: Ativar bomba"),
+            Text("- pH da água fora de 6.0–7.5: Desativar bomba"),
           ],
         ),
       ),
