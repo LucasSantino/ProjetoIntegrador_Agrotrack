@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'cadastrocultivo.dart'; // importe a nova tela
+import 'cadastrocultivo.dart'; // importe a tela de cadastro
 
 class Cultivo extends StatefulWidget {
   const Cultivo({super.key});
@@ -21,7 +21,7 @@ class _CultivoState extends State<Cultivo> {
       'espacamento': '50 cm',
       'colheita': 'Julho',
       'solo': 'Argiloso',
-      'imagem': Icons.grass,
+      'imagem': 'assets/images/plantação de milho.jpg',
     },
     {
       'nome': 'Tomate',
@@ -30,7 +30,7 @@ class _CultivoState extends State<Cultivo> {
       'espacamento': '40 cm',
       'colheita': 'Julho',
       'solo': 'Arenoso',
-      'imagem': Icons.local_florist,
+      'imagem': 'assets/images/plantação de tomate.jpg',
     },
     {
       'nome': 'Feijão',
@@ -39,7 +39,7 @@ class _CultivoState extends State<Cultivo> {
       'espacamento': '45 cm',
       'colheita': 'Junho',
       'solo': 'Arenoso',
-      'imagem': Icons.eco,
+      'imagem': 'assets/images/plantação de feijão.webp',
     },
     {
       'nome': 'Batata',
@@ -48,7 +48,7 @@ class _CultivoState extends State<Cultivo> {
       'espacamento': '30 cm',
       'colheita': 'Junho',
       'solo': 'Argiloso',
-      'imagem': Icons.yard,
+      'imagem': 'assets/images/plantação de batata.jpg',
     },
     {
       'nome': 'Alface',
@@ -57,11 +57,10 @@ class _CultivoState extends State<Cultivo> {
       'espacamento': '25 cm',
       'colheita': 'Junho',
       'solo': 'Orgânico',
-      'imagem': Icons.spa,
+      'imagem': 'assets/images/plantação de alface.jpg',
     },
   ];
 
-  // Função auxiliar que converte mês número para nome do mês em português
   String nomeDoMes(int mes) {
     const meses = [
       'Janeiro',
@@ -87,7 +86,6 @@ class _CultivoState extends State<Cultivo> {
           bool soloCond =
               filtroSolo == 'Todos' || cultura['solo'] == filtroSolo;
 
-          // Extrai o mês da dataPlantio no formato dd/MM/yyyy
           final data = cultura['dataPlantio'].toString();
           final partes = data.split('/');
           int mesNumero = partes.length > 1 ? int.tryParse(partes[1]) ?? 0 : 0;
@@ -135,10 +133,7 @@ class _CultivoState extends State<Cultivo> {
                 ),
               ],
             ),
-
             const SizedBox(height: 16),
-
-            // Filtros com opção 'Todos'
             Row(
               children: [
                 Expanded(
@@ -264,9 +259,7 @@ class _CultivoState extends State<Cultivo> {
                 ),
               ],
             ),
-
             const SizedBox(height: 24),
-
             if (culturasFiltradas.isEmpty)
               Center(
                 child: Text(
@@ -274,7 +267,6 @@ class _CultivoState extends State<Cultivo> {
                   style: TextStyle(color: Colors.grey[600]),
                 ),
               ),
-
             for (var cultura in culturasFiltradas)
               Card(
                 shape: RoundedRectangleBorder(
@@ -282,32 +274,52 @@ class _CultivoState extends State<Cultivo> {
                 ),
                 elevation: 4,
                 margin: const EdgeInsets.symmetric(vertical: 8),
-                child: ListTile(
-                  contentPadding: const EdgeInsets.symmetric(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
                     horizontal: 24,
                     vertical: 12,
                   ),
-                  leading: Padding(
-                    padding: const EdgeInsets.only(right: 20),
-                    child: Icon(
-                      cultura['imagem'],
-                      color: const Color.fromRGBO(0, 150, 136, 1),
-                      size: 32,
+                  child: IntrinsicHeight(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(12),
+                          child: SizedBox(
+                            width: 128,
+                            height: 120,
+                            child: Image.asset(
+                              cultura['imagem'],
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 20),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                cultura['nome'],
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                'Data de plantio: ${cultura['dataPlantio']}',
+                              ),
+                              Text('Ciclo: ${cultura['ciclo']}'),
+                              Text('Espaçamento: ${cultura['espacamento']}'),
+                              Text('Colheita: ${cultura['colheita']}'),
+                              Text('Solo: ${cultura['solo']}'),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                  title: Text(
-                    cultura['nome'],
-                    style: const TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('Data de plantio: ${cultura['dataPlantio']}'),
-                      Text('Ciclo: ${cultura['ciclo']}'),
-                      Text('Espaçamento: ${cultura['espacamento']}'),
-                      Text('Colheita prevista: ${cultura['colheita']}'),
-                      Text('Tipo de solo: ${cultura['solo']}'),
-                    ],
                   ),
                 ),
               ),
