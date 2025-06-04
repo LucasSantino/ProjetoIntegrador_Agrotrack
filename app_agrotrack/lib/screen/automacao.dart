@@ -44,11 +44,15 @@ class _AutomacaoState extends State<Automacao> {
       );
 
       if (response.statusCode == 200) {
+        final agora = DateTime.now();
+        final dataFormatada =
+            "${agora.day.toString().padLeft(2, '0')}/${agora.month.toString().padLeft(2, '0')}/${agora.year} ${agora.hour.toString().padLeft(2, '0')}:${agora.minute.toString().padLeft(2, '0')}";
+
         setState(() {
           bombaLigada = ligar;
           historicoAcao.insert(
             0,
-            "Bomba ${ligar ? 'ligada' : 'desligada'} manualmente às ${TimeOfDay.now().format(context)}",
+            "Bomba ${ligar ? 'ligada' : 'desligada'} manualmente em $dataFormatada",
           );
         });
       } else {
@@ -213,7 +217,7 @@ class _AutomacaoState extends State<Automacao> {
               _buildRegrasCard(),
               const SizedBox(height: 24),
               Text(
-                'Histórico de Ações Automáticas',
+                'Histórico de Ações',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               _buildHistoricoCard(),
