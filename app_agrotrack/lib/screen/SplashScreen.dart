@@ -63,7 +63,7 @@ class _SplashScreenState extends State<SplashScreen> {
               duration: const Duration(seconds: 2),
               curve: Curves.easeInOut,
               child: const Text(
-                'AgroTrach',
+                'AgroTrack',
                 style: TextStyle(
                   fontSize: 40,
                   fontWeight: FontWeight.bold,
