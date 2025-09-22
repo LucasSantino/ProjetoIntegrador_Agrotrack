@@ -1,6 +1,3 @@
-<img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/1bf5313e-6290-4df9-aa7b-7fda50bedf64" />
-
-
 # 🌱 Agrotrack – Tecnologia para Gestão Inteligente do Plantio  
 
 | Seção | Descrição |
@@ -12,3 +9,5 @@
 | ⚡ **Funcionalidades do Sistema** | **IoT e Automação** <br> • Monitoramento em tempo real de temperatura, umidade, pH e luminosidade. <br> • Envio dos dados a cada 4 segundos via protocolo MQTT. <br> • Controle automático/manual da irrigação com CLP. <br> • Integração com serviços de nuvem (AWS). <br><br> **Mobile (Flutter/Dart)** <br> • Interface amigável para consulta e controle. <br> • Histórico de dados exibido em gráficos interativos. <br> • Cadastro e gerenciamento de cultivos. <br> • ChatBot com recomendações personalizadas. <br><br> **Backend e Armazenamento** <br> • Banco de dados em nuvem (AWS). <br> • Integração com Contentful para registros adicionais. <br> • Armazenamento e exibição de imagens das plantações. |
 | 📊 **Resultados Esperados** | • Monitoramento em tempo real das variáveis ambientais. <br> • Automação de processos agrícolas (irrigação inteligente). <br> • Aplicativo acessível e intuitivo para gerenciamento remoto. <br> • ChatBot como apoio à decisão. <br> • Aumento da **produtividade** e da **sustentabilidade** no cultivo. |
 | 🔑 **Palavras-chave** | `IoT` • `Agricultura Inteligente` • `Automação` • `ChatBot` • `Flutter` • `AWS` • `Agrotrack` |
+
+<img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/1bf5313e-6290-4df9-aa7b-7fda50bedf64" />
