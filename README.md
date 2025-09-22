@@ -1,3 +1,4 @@
+<img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/6890cb94-40ff-4962-b83d-50aca72123b6" />
 # 🌱 Agrotrack – Tecnologia para Gestão Inteligente do Plantio  
 
 | Seção | Descrição |
